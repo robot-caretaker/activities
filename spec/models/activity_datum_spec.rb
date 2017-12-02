@@ -1,5 +1,11 @@
 require 'rails_helper'
 
-RSpec.describe ActivityDatum, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+describe ActivityDatum, type: :model do
+
+  subject { Fabricate.build(:activity_datum) }
+
+  describe 'validations' do
+    it { should validate_inclusion_of(:activity).in_array(%w[driving cultivating repairing slacking_off awol]) }
+  end
+
 end

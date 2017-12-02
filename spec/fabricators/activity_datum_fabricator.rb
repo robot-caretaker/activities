@@ -6,4 +6,5 @@ Fabricator(:activity_datum) do
   longitude  1.5
   accuracy   1.5
   speed      1.5
+  activity :driving
 end
