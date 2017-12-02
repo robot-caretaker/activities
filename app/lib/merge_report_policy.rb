@@ -22,15 +22,24 @@ class MergeReportPolicy
   end
 
   def adjacent_activity_reports
-    base_query = ActivityReport.where(company_id: new_datum.company_id).
-                                where(driver_id: new_datum.driver_id).
-                                where(activity: new_datum.activity)
-    earlier_reports = base_query.where(to: adjacent_times.first)
-    later_reports = base_query.where(from: adjacent_times.last)
-    earlier_reports + later_reports
+    [earlier_report, later_report].compact
+  end
+
+  def earlier_report
+    @earlier_report ||= base_query.where(to: adjacent_times.first).first
+  end
+
+  def later_report
+    @later_report ||= base_query.where(from: adjacent_times.last).first
   end
 
   protected
+
+  def base_query
+    ActivityReport.where(company_id: new_datum.company_id).
+                   where(driver_id: new_datum.driver_id).
+                   where(activity: new_datum.activity)
+  end
 
   def adjacent_times
     [new_datum.timestamp - 2.seconds, new_datum.timestamp + 2.seconds]
