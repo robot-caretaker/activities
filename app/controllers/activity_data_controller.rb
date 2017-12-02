@@ -10,6 +10,7 @@ class ActivityDataController < ApplicationController
     location_type = determinte_location_type(datum)
     datum.activity = ChooseActivityPolicy.new(datum.speed, location_type).activity
     datum.save!
+    notify_data_manager(datum)
   end
 
   protected
@@ -17,6 +18,11 @@ class ActivityDataController < ApplicationController
   def determinte_location_type(datum)
     # TODO
     :field
+  end
+
+  def notify_data_manager(datum)
+    # TODO This could be handle as a background/delayed job
+    DataManager.new(datum).process
   end
 
 end
