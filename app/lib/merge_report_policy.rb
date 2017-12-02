@@ -23,7 +23,8 @@ class MergeReportPolicy
 
   def adjacent_activity_reports
     base_query = ActivityReport.where(company_id: new_datum.company_id).
-                                where(driver_id: new_datum.driver_id)
+                                where(driver_id: new_datum.driver_id).
+                                where(activity: new_datum.activity)
     earlier_reports = base_query.where(to: adjacent_times.first)
     later_reports = base_query.where(from: adjacent_times.last)
     earlier_reports + later_reports
