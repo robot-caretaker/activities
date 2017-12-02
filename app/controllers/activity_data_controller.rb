@@ -16,8 +16,7 @@ class ActivityDataController < ApplicationController
   protected
 
   def determinte_location_type(datum)
-    # TODO
-    :field
+    LocationLookup.new(datum.latitude, datum.longitude).location_type
   end
 
   def notify_data_manager(datum)
