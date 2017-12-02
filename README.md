@@ -1,0 +1,24 @@
+Development environment setup
+=============================
+
+On OS X:
+
+1. Install [Homebrew](https://brew.sh)
+1. `brew install git`
+1. Install Ruby 2.4.1 ([rbenv](https://github.com/rbenv/rbenv#installation) recommended)
+1. `brew install postgres`
+1. `initdb /usr/local/var/postgres -E utf8`
+1. Clone this Git repository
+1. `cd activities`
+1. `gem install bundler`
+1. `bundle install`
+1. `gem install foreman`
+1. `foreman start postgres_dev &` (starts postgres in the background temporarily to run rake db:setup)
+1. `foreman run bundle exec rake db:setup`
+1. `foreman start`
+1. [http://localhost:5000/](http://localhost:5000/)
+
+Running tests
+=============
+
+1. `bundle exec rake spec`
