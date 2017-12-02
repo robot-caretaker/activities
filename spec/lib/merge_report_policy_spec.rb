@@ -12,7 +12,7 @@ describe MergeReportPolicy do
                                          activity: new_datum.activity) }
 
   context "with no adjacent data" do
-    it { is_expected.to_not be_mergable }
+    it { is_expected.to_not be_mergeable }
     it 'returns no data' do
       expect(subject.adjacent_activity_reports.length).to be 0
     end
@@ -28,7 +28,7 @@ describe MergeReportPolicy do
     context "later in time" do
       let(:from_timestamp) { new_datum.timestamp + 2.seconds }
       let(:to_timestamp) { new_datum.timestamp + 2.hours }
-      it { is_expected.to be_mergable }
+      it { is_expected.to be_mergeable }
       it "returns the report" do
         expect(subject.adjacent_activity_reports.first).to eq adjacent
       end
@@ -36,7 +36,7 @@ describe MergeReportPolicy do
     context "earlier in time" do
       let(:from_timestamp) { new_datum.timestamp - 2.hours }
       let(:to_timestamp) { new_datum.timestamp - 2.seconds }
-      it { is_expected.to be_mergable }
+      it { is_expected.to be_mergeable }
       it "returns the report" do
         expect(subject.adjacent_activity_reports.first).to eq adjacent
       end
@@ -50,7 +50,7 @@ describe MergeReportPolicy do
                                 activity: "driving",
                                 from: new_datum.timestamp + 2.seconds,
                                 to: new_datum.timestamp + 2.hours) }
-    it { is_expected.to_not be_mergable }
+    it { is_expected.to_not be_mergeable }
     it 'returns no data' do
       expect(subject.adjacent_activity_reports.length).to be 0
     end

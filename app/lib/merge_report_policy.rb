@@ -17,7 +17,7 @@ class MergeReportPolicy
     @new_datum = new_datum
   end
 
-  def mergable?
+  def mergeable?
     adjacent_activity_reports.any?
   end
 
