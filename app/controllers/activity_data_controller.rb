@@ -7,15 +7,26 @@ class ActivityDataController < ApplicationController
                               longitude: params[:longitude],
                               accuracy: params[:accuracy],
                               speed: params[:speed])
+    unless datum.latitude && datum.longitude
+      render json: { error: 'latitude and longitude must be provided' }
+      return
+    end
     location_type = determinte_location_type(datum)
     datum.activity = ChooseActivityPolicy.new(datum.speed, location_type).activity
+    unless datum.valid?
+      Rails.logger.info datum.errors
+      render json: { error: 'invalid params' }
+      return
+    end
     datum.save!
     notify_data_manager(datum)
+    render json: { status: 'success' }
   end
 
   protected
 
   def determinte_location_type(datum)
+    return nil unless datum.latitude && datum.longitude
     LocationLookup.new(datum.latitude, datum.longitude).location_type
   end
 
