@@ -5,6 +5,8 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+# NOTE: Why Postgres instead of Mongo? Because I wanted to use PostGIS for
+# its spatial functions. See README.md for more details
 gem 'pg'
 gem 'puma', '~> 3.7'
 gem 'rails', '~> 5.1.4'
